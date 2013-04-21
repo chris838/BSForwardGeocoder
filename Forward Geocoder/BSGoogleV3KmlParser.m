@@ -51,9 +51,6 @@
 		successfull = FALSE;
     }
     
-    [parser release];
-    [xmlData release];
-	
 	return successfull;
 }
 
@@ -152,11 +149,9 @@
 		if(currentResult != nil)
 		{
 			currentResult.addressComponents = addressComponents;
-			[addressComponents release];
 			addressComponents = nil;
 			
 			[results addObject:currentResult];
-			[currentResult release];
 			currentResult = nil;
 		}
 	}
@@ -164,11 +159,9 @@
 		if(currentAddressComponent != nil)
 		{
 			currentAddressComponent.types = typesArray;
-			[typesArray release];
 			typesArray = nil;
 			
 			[addressComponents addObject:currentAddressComponent];
-			[currentAddressComponent release];
 			currentAddressComponent = nil;
 		}
 	}
@@ -274,9 +267,6 @@
 		}
 	}
 
-	
-	
-	[elementValue release];
 	contentsOfCurrentProperty = nil;
 }
 
@@ -287,12 +277,6 @@
         // to the property that holds the content of the current element.
         [contentsOfCurrentProperty appendString:string];
     }
-}
-
--(void)dealloc
-{
-    [results release];
-	[super dealloc];
 }
 
 

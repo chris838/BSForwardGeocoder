@@ -107,17 +107,6 @@
     [encoder encodeFloat:self.boundsNorthEastLon forKey:@"boundsNorthEastLon"];
 }
 
-- (void)dealloc
-{	
-    [_address release];
-    [_countryNameCode release];
-    [_countryName release];
-    [_subAdministrativeAreaName release];
-    [_localityName release];
-    [_addressComponents release];
-	[super dealloc];
-}
-
 - (CLLocationCoordinate2D)coordinate 
 {
 	CLLocationCoordinate2D coordinate = {self.latitude, self.longitude};
@@ -162,7 +151,7 @@
 		
 	}
 	
-	return [matchingComponents autorelease];
+	return matchingComponents;
 }
 
 @end

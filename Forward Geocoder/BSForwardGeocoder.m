@@ -33,15 +33,15 @@
 - (void)dealloc
 {    
 #if NS_BLOCKS_AVAILABLE    
-    [_successBlock release];
-    [_failureBlock release];
+//    [_successBlock release];
+//    [_failureBlock release];
 #endif
     
     [self.geocodeConnection cancel];    
-    [_geocodeConnection release];
-    [_geocodeConnectionData release];
+//    [_geocodeConnection release];
+//    [_geocodeConnectionData release];
     
-	[super dealloc];
+//	[super dealloc];
 }
 
 - (id)initWithDelegate:(id<BSForwardGeocoderDelegate>)aDelegate
@@ -58,7 +58,7 @@
 {
     static NSString * const kBSGeocodingLegalCharactersToBeEscaped = @"?!@#$^&%*+=,:;'\"`<>()[]{}/\\|~ ";
     
-	return [(NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)string, NULL, (CFStringRef)kBSGeocodingLegalCharactersToBeEscaped, kCFStringEncodingUTF8) autorelease];
+	return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)string, NULL, (CFStringRef)kBSGeocodingLegalCharactersToBeEscaped, kCFStringEncodingUTF8));
 }
 
 - (void)forwardGeocodeWithQuery:(NSString *)searchQuery regionBiasing:(NSString *)regionBiasing viewportBiasing:(BSForwardGeocoderCoordinateBounds *)viewportBiasing
@@ -83,7 +83,7 @@
     }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:geocodeUrl] cachePolicy:NSURLCacheStorageAllowed timeoutInterval:10.0];
-    self.geocodeConnection = [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+    self.geocodeConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 #if NS_BLOCKS_AVAILABLE
@@ -125,7 +125,6 @@
         }        
     }
     
-    [parser release];
 }
 
 - (void)geocoderConnectionFailedWithErrorMessage:(NSString *)errorMessage
@@ -199,6 +198,6 @@
 
 + (BSForwardGeocoderCoordinateBounds *)boundsWithSouthWest:(CLLocationCoordinate2D)southwest northEast:(CLLocationCoordinate2D)northeast
 {
-    return [[[self alloc] initWithSouthWest:southwest northEast:northeast] autorelease];
+    return [[self alloc] initWithSouthWest:southwest northEast:northeast];
 }
 @end

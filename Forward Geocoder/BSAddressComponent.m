@@ -43,11 +43,4 @@
     }
 }
 
-- (void)dealloc
-{
-	[_shortName release];
-	[_longName release];
-	[_types release];
-	[super dealloc];
-}
 @end
